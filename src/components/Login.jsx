@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProviders';
 
 const Login = () => {
+
+    const {signIn} = useContext(AuthContext);
 
     const handleLogin = (event) => {
         // stop reloding form page
@@ -12,6 +15,15 @@ const Login = () => {
         const email = event.target.email.value;
         const password = event.target.password.value;
         console.log(email, password);
+
+        signIn(email, password)
+        .then(result => {
+           const loggedUser = result.user;
+           console.log(loggedUser); 
+        })
+        .catch(error => {
+            console.log(error);
+        })
     }
 
     return (
